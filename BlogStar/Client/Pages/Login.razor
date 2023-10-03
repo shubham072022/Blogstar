@@ -1,0 +1,51 @@
+﻿@page "/";
+@using BlogStar.Client.Services.IServices;
+@using BlogStar.Shared.Requests.Authentication.Commands;
+@inject IAuthService service
+@inject NavigationManager nav
+@inject ISnackbar snackbar
+
+<EditForm Model="@model" OnValidSubmit="login" class="login-page">
+    <h2 class="login-title text-croissant">Log in to your account</h2>
+
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <ValidationSummary />
+
+    <div class="form-section">
+        <MudTextField InputType="InputType.Email" Variant="Variant.Filled" Label="Email" @bind-Value="model.Email" For="(() => model.Email)" />
+        <MudTextField InputType="InputType.Password" Variant="Variant.Filled" Label="Password" @bind-Value="model.Password" For="(() => model.Password)" />
+    </div>
+    <div class="w-100 d-flex justify-content-end mt-3">
+    <NavLink class="text-primary fp-link text-right w-100" href="forgot-password">Forgot Password?</NavLink>
+    </div>
+
+    <div class="d-flex flex-column w-100 mt-3">
+        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary" class="py-3">Log In</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" class="py-3 mt-3">
+            <MudIcon Icon="@Icons.Custom.Brands.Google" Color="Color.Success" Class="mr-3"></MudIcon>
+            Log In With Google
+        </MudButton>
+    </div>
+    <p class="w-100 text-right text-muted"><b>Interested in sharing your knowledge with all? </b><NavLink href="sign-up" class="text-primary fp-link"><i class="text-croissant">Create your account</i></NavLink> </p>
+</EditForm>
+
+
+@code {
+    LoginCommandRequest model = new LoginCommandRequest();
+    private FluentValidationValidator? _fluentValidationValidator;
+
+
+    private async Task login()
+    {
+        if (await _fluentValidationValidator!.ValidateAsync())
+        {
+            var response = await service.Login(model);
+            if (response.Success)
+            {
+                nav.NavigateTo("posts", false,true);
+                return;
+            }
+            snackbar.Add(string.Join(",",response.Errors));
+        }
+    }
+}

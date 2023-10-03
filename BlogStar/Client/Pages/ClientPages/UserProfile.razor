@@ -1,0 +1,39 @@
+﻿@page "/profile"
+@layout ClientLayout
+@inherits LayoutComponentBase
+
+<div class="profile-page container-fluid">
+    <div class="cover-page">
+        <img src="/images/profile/profile.jpg" class="profile-img" />
+        <div class="cover-page-footer">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary">
+                Add Post <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
+            </MudButton>
+        </div>
+    </div>
+    <main class="page-body">
+        <header class="page-header">
+            <div class="container nav-area">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <NavLink href="profile/my-profile" class="nav-link tab-link" aria-current="page">Profile</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink href="profile/change-password" class="nav-link tab-link" aria-current="page">Change Password</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink href="profile/my-posts" class="nav-link tab-link" aria-current="page">My Posts</NavLink>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="page-rendering container py-3">
+            @Body
+        </section>
+    </main>
+</div>
+
+
+@code {
+    
+}

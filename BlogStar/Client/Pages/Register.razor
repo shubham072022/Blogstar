@@ -1,0 +1,45 @@
+﻿@page "/sign-up"
+@using BlogStar.Client.Services.IServices;
+@using BlogStar.Shared.Requests.Authentication.Commands;
+@using BlogStar.Shared.Wrapper.Abstract;
+@inject IAuthService service
+@inject NavigationManager nav
+@inject ISnackbar snackbar
+
+<EditForm Model="model" class="register-page" OnValidSubmit="register">
+    <div class="register-header">
+        <h2 class="register-title text-croissant">Create Your Account</h2>
+        <p class="register-subtitle"><b>Already have an account?</b> <NavLink href="" class="text-primary fp-link text-croissant"><i class="text-croissant">Log in</i></NavLink></p>
+    </div>
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <ValidationSummary />
+
+    <div class="form-section">
+        <MudTextField InputType="InputType.Email" Variant="Variant.Filled" Label="Email" @bind-Value="model.Email" For="(() => model.Email)"></MudTextField>
+        <MudTextField InputType="InputType.Password" Variant="Variant.Filled" Label="Password" @bind-Value="model.Password" For="(() => model.Password)"></MudTextField>
+        <MudTextField InputType="InputType.Password" Variant="Variant.Filled" Label="Confirm Password" @bind-Value="model.ConfirmPassword" For="(() => model.ConfirmPassword)"></MudTextField>
+    </div>
+
+    <div class="d-flex flex-column w-100 mt-3">
+        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary" class="py-3">Create Account</MudButton>
+    </div>
+</EditForm>
+
+@code {
+    RegisterCommandRequest model = new RegisterCommandRequest();
+    private FluentValidationValidator? _fluentValidationValidator;
+
+    private async void register()
+    {
+        if(await _fluentValidationValidator.ValidateAsync())
+        {
+            var response = await service.Register(model);
+            if (response.Success)
+            {
+                nav.NavigateTo("sign-up", false, true);
+                return;
+            }
+            snackbar.Add(string.Join(",", response.Errors));
+        }
+    }
+}

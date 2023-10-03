@@ -1,0 +1,48 @@
+﻿.auth-page {
+    height: 100% !important;
+}
+
+    .auth-page .row {
+        height: 100% !important;
+    }
+
+.add-section {
+    background: url("/images/auth/authback.jpg") no-repeat;
+    background-size: cover;
+}
+
+.auth-pages-section {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+    .auth-pages-section .auth-section {
+        position: relative;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        width: 50%;
+    }
+
+        .auth-pages-section .auth-section .logo-section {
+            position: absolute;
+            top: 60px;
+        }
+
+            .auth-pages-section .auth-section .logo-section .logo {
+                font-size: 2.1rem;
+            }
+
+        .auth-pages-section .auth-section .render-section {
+            width: 100%;
+        }
+
+        .auth-pages-section .auth-section .footer-section {
+            position: absolute;
+            bottom: 60px;
+        }

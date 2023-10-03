@@ -1,0 +1,20 @@
+﻿@page "/posts"
+@layout ClientLayout
+
+<h3>Posts</h3>
+
+<NavLink href="search" class="nav-link" aria-current="page">
+    <MudIcon Icon="@Icons.Material.Filled.Search"></MudIcon> Search
+</NavLink>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+
+        base.OnInitialized();
+        //foreach(var claim in  claims)
+        //{
+        //    Console.WriteLine(claim.Value);
+        //}
+    }
+}

@@ -1,0 +1,36 @@
+﻿@using BlogStar.Client.Services.IServices;
+@using BlogStar.Shared.Dtos;
+@inherits LayoutComponentBase
+@inject ILocalStorageService service
+@inject NavigationManager nav
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<main class="client-page">
+    <Header UserEmail="@Email" />
+    <section class="render-section">
+        @Body
+    </section>
+</main>
+
+@code {
+    public string Email { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+        base.OnInitialized();
+
+        var auth = await service.GetItem<TokenDTO>("auth");
+
+        if (auth == null)
+        {
+            nav.NavigateTo("", false, true);
+            return;
+        }
+        var claims = await service.GetClaims();
+        Email = claims.Email;
+    }
+}
